@@ -8,7 +8,6 @@ class ClassCounter extends React.Component {
     };
     this.increment = this.increment.bind(this);
     this.decrement = this.decrement.bind(this);
- 
   }
 
   increment() {
@@ -16,7 +15,7 @@ class ClassCounter extends React.Component {
   }
 
   decrement() {
-    this.setState({ count: this.state.count - 1 })
+    this.setState({ count: this.state.count - 1 });
   }
 
   render() {
