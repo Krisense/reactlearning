@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import Counter from "./components/Counter";
 import ClassCounter from "./components/ClassCounter";
 import "./styles/App.css";
-import PostItem from "./components/PostItem";
 import PostList from "./components/PostList";
 import MyButton from "./components/UI/button/MyButton";
 import MyInput from "./components/UI/input/MyInput";
@@ -13,13 +12,13 @@ function App() {
     { id: 2, title: "Javascript 2", body: "Description" },
     { id: 3, title: "Javascript 3", body: "Description" },
   ]);
-  const [title, setTitle] = useState(""); //хук usestate
-  const bodyInputRef = useRef(); //хук useref получаем доступ к дом элементу, забираем из него value
+  const [post, setPost] = useState({ title: "", body: "" }); //хук usestate
 
   const addNewPost = (e) => {
     e.preventDefault();
-    console.log(title);
-    console.log(bodyInputRef.current.value)
+
+    setPosts([...posts, { ...post, id: Date.now() }]);
+    setPost({ title: "", body: "" });
   };
 
   return (
@@ -27,18 +26,19 @@ function App() {
       <form>
         {/*УПРАВЛЯЕМЫЙ КОМПОНЕНТ*/}
         <MyInput
-          value={title}
+          value={post.title}
           onChange={(e) =>
-            setTitle(e.target.value)
+            setPost({ ...post, title: e.target.value })
           } /*ИЗ ИВЕНТА С ПОЛЯ ТАРГЕТ ДОСТАЕМ ПОЛЕ VALUE И ПОМЕЩАЕМ ЕГО В СОСТОЯНИЕ*/
           type="text"
           placeholder="Название поста"
         />
         {/* НЕУПРАВЛЯЕМЫЙ\НЕКОНТРОЛИРУЕМЫЙ КОМПОНЕНТ */}
-        <MyInput 
-        ref={bodyInputRef}
-        type="text" 
-        placeholder="Описание поста" 
+        <MyInput
+          value={post.body}
+          onChange={(e) => setPost({ ...post, body: e.target.value })}
+          type="text"
+          placeholder="Описание поста"
         />
         <MyButton onClick={addNewPost}>Создать пост</MyButton>
       </form>
